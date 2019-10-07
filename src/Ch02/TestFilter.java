@@ -17,11 +17,19 @@ public class TestFilter {
         inventory.add(new Apple(GREEN, 122));
         inventory.add(new Apple(GREEN, 177));
 
-        List<Apple> result = AppleFilter.filterGreenApples(inventory);
+//        List<Apple> result = AppleFilter.filterGreenApples(inventory);
+//        System.out.println(result);
+//
+//        result = AppleFilter.filterRedApples(inventory);
+//        System.out.println(result);
+
+        List<Apple> result = AppleFilter.filterApplesByColor(inventory, GREEN);
         System.out.println(result);
 
-        result = AppleFilter.filterRedApples(inventory);
+        result = AppleFilter.filterApplesByWeight(inventory, 150);
         System.out.println(result);
+
+
 
     }
 }
