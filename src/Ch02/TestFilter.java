@@ -23,13 +23,20 @@ public class TestFilter {
 //        result = AppleFilter.filterRedApples(inventory);
 //        System.out.println(result);
 
-        List<Apple> result = AppleFilter.filterApplesByColor(inventory, GREEN);
+//        List<Apple> result = AppleFilter.filterApplesByColor(inventory, GREEN);
+//        System.out.println(result);
+//
+//        result = AppleFilter.filterApplesByWeight(inventory, 150);
+//        System.out.println(result);
+
+        List<Apple> result = AppleFilter.filterApples(inventory, new AppleGreenColorPredicate());
         System.out.println(result);
 
-        result = AppleFilter.filterApplesByWeight(inventory, 150);
+        result = AppleFilter.filterApples(inventory, new AppleHeavyWeightPredicate());
         System.out.println(result);
 
-
+        result = AppleFilter.filterApples(inventory, new AppleRedAndHeavyPredicate());
+        System.out.println(result);
 
     }
 }

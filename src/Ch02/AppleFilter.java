@@ -28,20 +28,30 @@ public class AppleFilter {
 //        return result;
 //    }
 
-    public static List<Apple> filterApplesByColor(List<Apple> inventory, AppleColor color) {
-        List<Apple> result = new ArrayList<>();
-        for (Apple apple: inventory) {
-            if (color.equals(apple.getColor())) {
-                result.add(apple);
-            }
-        }
-        return result;
-    }
+//    public static List<Apple> filterApplesByColor(List<Apple> inventory, AppleColor color) {
+//        List<Apple> result = new ArrayList<>();
+//        for (Apple apple: inventory) {
+//            if (color.equals(apple.getColor())) {
+//                result.add(apple);
+//            }
+//        }
+//        return result;
+//    }
+//
+//    public static List<Apple> filterApplesByWeight(List<Apple> inventory, int weight) {
+//        List<Apple> result = new ArrayList<>();
+//        for (Apple apple: inventory) {
+//            if (weight <= apple.getWeight()) {
+//                result.add(apple);
+//            }
+//        }
+//        return result;
+//    }
 
-    public static List<Apple> filterApplesByWeight(List<Apple> inventory, int weight) {
+    public static List<Apple> filterApples(List<Apple> inventory, ApplePredicate p) {
         List<Apple> result = new ArrayList<>();
         for (Apple apple: inventory) {
-            if (weight <= apple.getWeight()) {
+            if (p.test(apple)) {
                 result.add(apple);
             }
         }
