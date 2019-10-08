@@ -38,5 +38,13 @@ public class TestFilter {
         result = AppleFilter.filterApples(inventory, new AppleRedAndHeavyPredicate());
         System.out.println(result);
 
+        // Anonymous class
+        result = AppleFilter.filterApples(inventory, new ApplePredicate() {
+            @Override
+            public boolean test(Apple apple) {
+                return AppleColor.RED.equals(apple.getColor());
+            }
+        });
+        System.out.println(result);
     }
 }
