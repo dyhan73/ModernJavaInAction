@@ -2,6 +2,7 @@ package Ch02;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 import static Ch02.AppleColor.GREEN;
 import static Ch02.AppleColor.RED;
@@ -53,6 +54,17 @@ public class AppleFilter {
         for (Apple apple: inventory) {
             if (p.test(apple)) {
                 result.add(apple);
+            }
+        }
+        return result;
+    }
+
+    // abstract to list
+    public static <T> List<T> filter(List<T> list, Predicate<T> p) {
+        List<T> result = new ArrayList<>();
+        for (T e: list) {
+            if (p.test(e)) {
+                result.add(e);
             }
         }
         return result;

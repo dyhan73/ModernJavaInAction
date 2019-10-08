@@ -1,6 +1,7 @@
 package Ch02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static Ch02.AppleColor.GREEN;
@@ -46,5 +47,18 @@ public class TestFilter {
             }
         });
         System.out.println(result);
+
+        // lambda expression
+        result = AppleFilter.filterApples(inventory, (Apple apple) -> AppleColor.RED.equals(apple.getColor()));
+        System.out.println(result);
+
+        // abstraction to list
+        result = AppleFilter.filter(inventory, (Apple apple) -> AppleColor.RED.equals(apple.getColor()));
+        System.out.println(result);
+
+        List<Integer> intInven = Arrays.asList(1,2,3,4,5,6,7,8,9,10);
+        List<Integer> evenNums = AppleFilter.filter(intInven, (Integer i) -> i % 2 == 0);
+        System.out.println(evenNums);
+
     }
 }
