@@ -1,6 +1,7 @@
 package Ch03;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 /**
  * P01_LambdaInANutshell
@@ -37,6 +38,17 @@ public class P01_LambdaInANutshell {
     }
   }
 
+  // abstract to list
+  public static <T> List<T> filter(List<T> list, Predicate<T> p) {
+    List<T> result = new ArrayList<>();
+    for (T e: list) {
+        if (p.test(e)) {
+            result.add(e);
+        }
+    }
+    return result;
+}
+
   public static void main(String[] args) {
     P01_LambdaInANutshell proc = new P01_LambdaInANutshell();
 
@@ -60,6 +72,9 @@ public class P01_LambdaInANutshell {
 
     Collections.sort(appleList, byWeight_byLambda);
     System.out.println(appleList);
+
+    List<Apple> filteredAppleList = filter(appleList, (Apple a) -> COLOR.GREEN.equals(a.getColor()));
+    System.out.println(filteredAppleList);
   }
   
 }
