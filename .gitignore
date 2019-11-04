@@ -1,7 +1,20 @@
 # Project exclude paths
-.idea
-*.iml
-/out/
+
+# OS files
 .DS_Store
 
+# output files
+/out/
+/bin/
+/build/
+
+# Intellij files
+.idea
+*.iml
+
+
+# VSCode files
 .vscode
+.settings
+.classpath
+.project
