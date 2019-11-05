@@ -1,7 +1,9 @@
 package Ch03;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class S04_FunctionalInterfaces {
@@ -28,10 +30,28 @@ public class S04_FunctionalInterfaces {
         }
     }
 
+    class UsingConsumer {
+        public <T> void forEach(List<T> list, Consumer<T> c) {
+            for (T t: list) {
+                c.accept(t);
+            }
+        }
+
+        public void testForEach() {
+            forEach(
+                    Arrays.asList(1,2,3,4,5),
+                    (Integer i) -> System.out.println(i)
+            );
+        }
+    }
+
     public static void main(String[] args) {
         S04_FunctionalInterfaces proc = new S04_FunctionalInterfaces();
 
         UsingPredicate test1 = proc.new UsingPredicate();
         test1.testFilter();
+
+        UsingConsumer test2 = proc.new UsingConsumer();
+        test2.testForEach();
     }
 }
