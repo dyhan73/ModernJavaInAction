@@ -6,7 +6,7 @@ import java.util.function.Predicate;
 /**
  * P01_LambdaInANutshell
  */
-public class P01_LambdaInANutshell {
+public class S01_LambdaInANutshell {
   enum COLOR {GREEN, RED};
 
   class Apple {
@@ -50,7 +50,7 @@ public class P01_LambdaInANutshell {
 }
 
   public static void main(String[] args) {
-    P01_LambdaInANutshell proc = new P01_LambdaInANutshell();
+    S01_LambdaInANutshell proc = new S01_LambdaInANutshell();
 
     ArrayList<Apple> appleList = new ArrayList<>();
     appleList.add(proc.new Apple(COLOR.RED, 58));
