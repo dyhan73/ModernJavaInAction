@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class S04_FunctionalInterfaces {
@@ -45,6 +46,24 @@ public class S04_FunctionalInterfaces {
         }
     }
 
+    class UsingFunction {
+        public <T, R> List<R> map(List<T> list, Function<T, R> f) {
+            List<R> result = new ArrayList<>();
+            for (T t: list) {
+                result.add(f.apply(t));
+            }
+            return result;
+        }
+
+        public void testFunction() {
+            List<Integer> l = map(
+                    Arrays.asList("lambdas", "in", "action"),
+                    (String s) -> s.length()
+            );
+            System.out.println(l);
+        }
+    }
+
     public static void main(String[] args) {
         S04_FunctionalInterfaces proc = new S04_FunctionalInterfaces();
 
@@ -53,5 +72,8 @@ public class S04_FunctionalInterfaces {
 
         UsingConsumer test2 = proc.new UsingConsumer();
         test2.testForEach();
+
+        UsingFunction test3 = proc.new UsingFunction();
+        test3.testFunction();
     }
 }
