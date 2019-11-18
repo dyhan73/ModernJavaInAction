@@ -1,4 +1,4 @@
-package Ch03;
+package Ch03_LambdaExpressions;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

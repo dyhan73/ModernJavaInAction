@@ -1,4 +1,4 @@
-package Ch02;
+package Ch02_PassingCodeWithBehaviorParameterization;
 
 public class AppleHeavyWeightPredicate implements ApplePredicate {
     @Override

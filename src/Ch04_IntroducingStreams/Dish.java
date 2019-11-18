@@ -1,4 +1,4 @@
-package Ch04;
+package Ch04_IntroducingStreams;
 
 import java.util.Arrays;
 import java.util.List;

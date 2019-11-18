@@ -1,11 +1,8 @@
-package Ch02;
+package Ch02_PassingCodeWithBehaviorParameterization;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Predicate;
-
-import static Ch02.AppleColor.GREEN;
-import static Ch02.AppleColor.RED;
 
 public class AppleFilter {
 

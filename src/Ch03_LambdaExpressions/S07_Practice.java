@@ -1,4 +1,4 @@
-package Ch03;
+package Ch03_LambdaExpressions;
 
 import java.util.ArrayList;
 import java.util.Comparator;

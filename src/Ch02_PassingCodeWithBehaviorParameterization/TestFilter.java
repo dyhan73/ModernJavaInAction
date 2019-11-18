@@ -1,11 +1,11 @@
-package Ch02;
+package Ch02_PassingCodeWithBehaviorParameterization;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static Ch02.AppleColor.GREEN;
-import static Ch02.AppleColor.RED;
+import static Ch02_PassingCodeWithBehaviorParameterization.AppleColor.GREEN;
+import static Ch02_PassingCodeWithBehaviorParameterization.AppleColor.RED;
 
 public class TestFilter {
     public static void main(String[] args) {

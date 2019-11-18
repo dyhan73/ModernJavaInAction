@@ -1,5 +1,5 @@
 
-package Ch03;
+package Ch03_LambdaExpressions;
 
 import java.util.*;
 import java.util.function.Predicate;

@@ -1,6 +1,6 @@
-package Ch02;
+package Ch02_PassingCodeWithBehaviorParameterization;
 
-import static Ch02.AppleColor.GREEN;
+import static Ch02_PassingCodeWithBehaviorParameterization.AppleColor.GREEN;
 
 public class AppleGreenColorPredicate implements ApplePredicate {
     @Override
