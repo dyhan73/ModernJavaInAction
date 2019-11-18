@@ -39,7 +39,7 @@ public class Dish {
         return name;
     }
 
-    static List<Dish> getMenu() {
+    public static List<Dish> getMenu() {
         List<Dish> menu = Arrays.asList(
                 new Dish("pork", false, 800, Type.MEAT),
                 new Dish("beef", false, 700, Type.MEAT),
