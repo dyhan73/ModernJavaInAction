@@ -11,6 +11,7 @@ public class S3_Mapping {
     public static void main(String[] args) {
         S531_Intro();
         S532_FlatMap();
+        Q52_Mapping();
     }
 
     private static void S531_Intro() {
@@ -66,5 +67,32 @@ public class S3_Mapping {
                 .distinct()
                 .collect(Collectors.toList());
         System.out.println(uniqueCharacters);
+    }
+
+    private static void Q52_Mapping() {
+        // Input : number list
+        // Output : squared number list
+        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7);
+        List<Integer> squaredNumbers = numbers.stream()
+                .map(n -> n * n)
+                .collect(Collectors.toList());
+        System.out.println(squaredNumbers);
+
+        // Input : two number list
+        // Output : Cardinal map
+        List<Integer> numbers1 = Arrays.asList(1, 2, 3);
+        List<Integer> numbers2 = Arrays.asList(3, 4);
+        List<int[]> pairs = numbers1.stream()
+                .flatMap(i -> numbers2.stream().map(j -> new int[]{i, j}))
+                .collect(Collectors.toList());
+        pairs.stream().forEach(p -> System.out.println(p[0] + ", " + p[1]));
+
+        // input : tow number list
+        // output : cardinal map filtered by sum % 3 = 0
+        List<int[]> pairs2 = numbers1.stream()
+                .flatMap(i -> numbers2.stream().map(j -> new int[]{i, j}))
+                .filter(p -> (p[0] + p[1]) % 3 == 0)
+                .collect(Collectors.toList());
+        pairs2.stream().forEach(p -> System.out.println(p[0] + ", " + p[1]));
     }
 }
