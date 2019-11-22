@@ -4,6 +4,7 @@ import Ch04_IntroducingStreams.Dish;
 
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class S2_ReducingSummarization {
     public static void main(String[] args) {
@@ -11,21 +12,9 @@ public class S2_ReducingSummarization {
         s621_FindMaxMinValues(menu);
         s622_Summarization(menu);
         s623_StringJoining(menu);
-        // sum calories using general reducing
-        int totalCalories = menu.stream().collect(Collectors.reducing(0, Dish::getCalories, (i, j) -> i + j));
-        System.out.println(totalCalories);
-        totalCalories = menu.stream().map(Dish::getCalories).reduce(0, (i, j) -> i + j);
-        System.out.println(totalCalories);
-        totalCalories = menu.stream().map(Dish::getCalories).reduce(0, Integer::sum);
-        System.out.println(totalCalories);
+        s624_GeneralizedSummarizationReducing(menu);
+        s624_CollectVsReduce();
 
-        // find most calorie dish
-        Optional<Dish> mostCalorieDish = menu.stream().collect(Collectors.reducing(
-                (d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2
-        ));
-        System.out.println(mostCalorieDish);
-        mostCalorieDish = menu.stream().reduce((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2);
-        System.out.println(mostCalorieDish);
     }
 
     private static void s621_FindMaxMinValues(List<Dish> menu) {
@@ -62,5 +51,45 @@ public class S2_ReducingSummarization {
         // simplify by toString => error (Type error)
 //        shortMenu = (String) menu.stream().collect(Collectors.joining());
 //        System.out.println(shortMenu);
+    }
+
+    private static void s624_GeneralizedSummarizationReducing(List<Dish> menu) {
+        // sum calories using general reducing
+        int totalCalories = menu.stream().collect(Collectors.reducing(0, Dish::getCalories, (i, j) -> i + j));
+        System.out.println(totalCalories);
+        totalCalories = menu.stream().map(Dish::getCalories).reduce(0, (i, j) -> i + j);
+        System.out.println(totalCalories);
+        totalCalories = menu.stream().map(Dish::getCalories).reduce(0, Integer::sum);
+        System.out.println(totalCalories);
+
+        // find most calorie dish
+        Optional<Dish> mostCalorieDish = menu.stream().collect(Collectors.reducing(
+                (d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2
+        ));
+        System.out.println(mostCalorieDish);
+        mostCalorieDish = menu.stream().reduce((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2);
+        System.out.println(mostCalorieDish);
+    }
+
+    private static void s624_CollectVsReduce() {
+        // collect version
+        // => using for change container
+        Stream<Integer> stream = Arrays.asList(1, 2, 3, 4, 5, 6).stream();
+        System.out.println(stream.collect(Collectors.toList()));
+
+        // reduce version (wrong example due to side-effect : modify input data)
+        stream = Arrays.asList(1, 2, 3, 4, 5, 6).stream();
+        List<Integer> numbers = stream.reduce(
+                new ArrayList<Integer>(),
+                (List<Integer> l, Integer e) -> {
+                    l.add(e); // wrong usage
+                    return l;
+                },
+                (List<Integer> l1, List<Integer> l2) -> {
+                    l1.addAll(l2); // wrong usage
+                    return l1;
+                }
+        );
+        System.out.println(numbers);
     }
 }
