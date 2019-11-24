@@ -69,6 +69,12 @@ public class S2_ReducingSummarization {
         System.out.println(mostCalorieDish);
         mostCalorieDish = menu.stream().reduce((d1, d2) -> d1.getCalories() > d2.getCalories() ? d1 : d2);
         System.out.println(mostCalorieDish);
+
+        totalCalories = menu.stream().map(Dish::getCalories).reduce(Integer::sum).get();
+        System.out.println(totalCalories);
+
+        totalCalories = menu.stream().mapToInt(Dish::getCalories).sum();
+        System.out.println(totalCalories);
     }
 
     private static void s624_CollectVsReduce() {
