@@ -14,7 +14,7 @@ public class S2_ReducingSummarization {
         s623_StringJoining(menu);
         s624_GeneralizedSummarizationReducing(menu);
         s624_CollectVsReduce();
-
+        q61_StringJoinWithReduce(menu);
     }
 
     private static void s621_FindMaxMinValues(List<Dish> menu) {
@@ -97,5 +97,21 @@ public class S2_ReducingSummarization {
                 }
         );
         System.out.println(numbers);
+    }
+
+    private static void q61_StringJoinWithReduce(List<Dish> menu) {
+        String menuNames = menu.stream().map(Dish::getName).collect(Collectors.joining(", "));
+        System.out.println(menuNames);
+
+        // implement joining
+        menuNames = menu.stream().map(Dish::getName).collect(Collectors.reducing((s1, s2) -> s1 + ", " + s2)).get();
+        System.out.println(menuNames);
+        // check Optional
+        Optional<String> optMenuNames = menu.stream().map(Dish::getName).collect(Collectors.reducing((s1, s2) -> s1 + ", " + s2));
+        optMenuNames.ifPresent(System.out::println);
+        // BiFunction must return same TYPE of parameter. It doesn't work
+//        menuNames = menu.stream().collect(Collectors.reducing((d1, d2) -> d1.getName() + d2.getName())).get();
+        menuNames = menu.stream().collect(Collectors.reducing("", Dish::getName, (s1, s2) -> s1 + ", " + s2));
+        System.out.println(menuNames);
     }
 }
