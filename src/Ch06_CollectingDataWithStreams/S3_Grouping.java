@@ -13,6 +13,8 @@ public class S3_Grouping {
 
         s630_Intro(menu);
         s631_ManipulatingGroupedElements(menu);
+        s632_MultilevelGrouping(menu);
+        s633_CollectingDataInSubgroups(menu);
     }
 
     private static void s630_Intro(List<Dish> menu) {
@@ -64,5 +66,57 @@ public class S3_Grouping {
         Map<Dish.Type, Set<String>> dishNamesSetByType = menu.stream()
                 .collect(Collectors.groupingBy(Dish::getType, Collectors.flatMapping(dish -> dishTags.get(dish.getName()).stream(), Collectors.toSet())));
         System.out.println(dishNamesSetByType);
+    }
+
+    private static void s632_MultilevelGrouping(List<Dish> menu) {
+        // multilevel grouping
+        Map<Dish.Type, Map<CaloricLevel, List<Dish>>> dishesByTypeCaloricLevel =
+                menu.stream().collect(
+                        Collectors.groupingBy(Dish::getType,
+                                Collectors.groupingBy(dish -> {
+                                    if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+                                    else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+                                    else return CaloricLevel.FAT;
+                                })
+                        )
+                );
+        System.out.println(dishesByTypeCaloricLevel);
+    }
+
+    private static void s633_CollectingDataInSubgroups(List<Dish> menu) {
+        // groupBy and counting
+        Map<Dish.Type, Long> typesCount = menu.stream().collect(
+                Collectors.groupingBy(Dish::getType, Collectors.counting())
+        );
+        System.out.println(typesCount);
+
+        // get max calorie on subgroup
+        Map<Dish.Type, Optional<Dish>> mostCaloricByType = menu.stream().collect(
+                Collectors.groupingBy(Dish::getType, Collectors.maxBy(Comparator.comparingInt(Dish::getCalories)))
+        );
+        System.out.println(mostCaloricByType);
+
+        // Adapting the collector result to a different type (erase Optional)
+        Map<Dish.Type, Dish> mostCaloricByType2 = menu.stream()
+                .collect(Collectors.groupingBy(Dish::getType,
+                        Collectors.collectingAndThen(Collectors.maxBy(Comparator.comparing(Dish::getCalories)), Optional::get)));
+        System.out.println(mostCaloricByType2);
+
+        // Other examples of collectors used in conjunction with groupingBy
+        // sum calories by group
+        Map<Dish.Type, Integer> totalCaloriesByType = menu.stream().collect(
+                Collectors.groupingBy(Dish::getType, Collectors.summingInt(Dish::getCalories))
+        );
+        System.out.println(totalCaloriesByType);
+
+        // collect caloric levels of each group
+        Map<Dish.Type, Set<CaloricLevel>> caloricLevelByType = menu.stream().collect(
+                Collectors.groupingBy(Dish::getType, Collectors.mapping(dish -> {
+                    if (dish.getCalories() <= 400) return CaloricLevel.DIET;
+                    else if (dish.getCalories() <= 700) return CaloricLevel.NORMAL;
+                    else return CaloricLevel.FAT;
+                }, Collectors.toSet()))
+        );
+        System.out.println(caloricLevelByType);
     }
 }
