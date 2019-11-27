@@ -3,6 +3,7 @@ package Ch06_CollectingDataWithStreams;
 import Ch04_IntroducingStreams.Dish;
 
 import java.util.*;
+import java.util.stream.IntStream;
 //import java.util.stream.Collectors;
 import static java.util.stream.Collectors.*;
 
@@ -12,6 +13,7 @@ public class S4_Partitioning {
         s640_Intro(menu);
         s641_AdvantagesOfPartitioning(menu);
         q62_UsePartitioningBy(menu);
+        s642_PartitioningNumberByPrime();
     }
 
     private static void s640_Intro(List<Dish> menu) {
@@ -62,5 +64,31 @@ public class S4_Partitioning {
         Map<Boolean, Long> countsByVegetarian = menu.stream().collect(
                 partitioningBy(Dish::isVegetarian, counting()));
         System.out.println(countsByVegetarian);
+    }
+
+    private static void s642_PartitioningNumberByPrime() {
+        int candidate = 40;
+        System.out.println(isPrime(candidate));
+        candidate = 41;
+        System.out.println(isPrime2(candidate));
+
+        List<Integer> intList = Arrays.asList(11, 12, 13, 14, 15, 16, 17);
+        Map<Boolean, List<Integer>> partByIsPrime = intList.stream().collect(
+                partitioningBy(S4_Partitioning::isPrime2)
+        );
+        System.out.println(partByIsPrime);
+        return;
+    }
+
+    private static boolean isPrime(int candidate) {
+        return IntStream.range(2, candidate)
+                .noneMatch(i -> candidate % i == 0);
+    }
+
+    // improved version by less than square root
+    private static boolean isPrime2(int candidate) {
+        int candidateRoot = (int) Math.sqrt(candidate);
+        return IntStream.range(2, candidateRoot)
+                .noneMatch(i -> candidate % i == 0);
     }
 }
