@@ -7,10 +7,12 @@
 /out/
 /bin/
 /build/
+/target/
+*/target/
 
 # Intellij files
-.idea
-*.iml
+#.idea
+#*.iml
 
 
 # VSCode files
