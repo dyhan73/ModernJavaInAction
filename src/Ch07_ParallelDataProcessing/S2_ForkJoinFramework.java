@@ -64,5 +64,7 @@ public class S2_ForkJoinFramework extends RecursiveTask<Long> {
     public static void main(String[] args) {
         long sum = S2_ForkJoinFramework.forkJoinSum(100000);
         System.out.println(sum);
+
+        System.out.println(Runtime.getRuntime().availableProcessors());
     }
 }
