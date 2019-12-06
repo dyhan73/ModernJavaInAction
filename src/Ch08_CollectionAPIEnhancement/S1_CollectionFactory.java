@@ -7,7 +7,10 @@ import java.util.stream.Stream;
 public class S1_CollectionFactory {
     public static void main(String[] args) {
         s810_Intro();
-
+        s811_ListOf();
+        s812_SetOf();
+        s813_MapOf();
+        q81_Immutable();
     }
 
     private static void s810_Intro() {
@@ -52,5 +55,59 @@ public class S1_CollectionFactory {
         System.out.println(friendSet.equals(friendSet2));
         System.out.println(friendSet.getClass());
         System.out.println(friendSet2.getClass());
+    }
+
+    private static void s811_ListOf() {
+        System.out.println("========== Section 8.1.1");
+        // using List.of()
+        List<String> friends = List.of("Raphael", "Olivia", "Thibaut");
+        System.out.println(friends);
+        System.out.println(friends.getClass());  // java.util.ImmutableCollections$ListN
+//        friends.set(0, "kakarott"); // failure
+//        System.out.println(friends);
+//        friends.add("Daeyoung");  // failure
+//        System.out.println(friends);
+    }
+
+    private static void s812_SetOf() {
+        System.out.println("========== Section 8.1.2");
+        // using Set.of()
+        Set<String> friends = Set.of("Raphael", "Olivia", "Thibaut");
+        System.out.println(friends);
+        System.out.println(friends.getClass());  //java.util.ImmutableCollections$SetN
+
+        friends = Set.of("Raphael", "Olivia", "Thibaut", "4", "5", "6", "7", "8", "9", "10", "11");
+        System.out.println(friends);
+        System.out.println(friends.getClass());  // same above even with over 10 arguments
+
+//        friends = Set.of("Raphael", "Olivia", "Olivia");  // failure - duplicate element
+//        System.out.println(friends);
+    }
+
+    private static void s813_MapOf() {
+        System.out.println("=========== Section 8.1.3");
+        // Map.of()
+        Map<String, Integer> ageOfFriends = Map.of("Raphael", 30, "Olivia", 25, "Thibaut", 26);
+        System.out.println(ageOfFriends);
+        System.out.println(ageOfFriends.getClass());  //java.util.ImmutableCollections$MapN
+
+        // Recommended way with over than 10 elements
+        ageOfFriends = Map.ofEntries(
+                Map.entry("Raphael", 30),
+                Map.entry("Olivia", 25),
+                Map.entry("Thibaut", 26));
+        System.out.println(ageOfFriends);
+        System.out.println(ageOfFriends.getClass());
+    }
+
+    private static void q81_Immutable() {
+        System.out.println("=========== Quiz 8-1");
+        List<String> actors = List.of("Keanu", "Jessica");
+        try {
+            actors.set(0, "Brad");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println(actors);
     }
 }
