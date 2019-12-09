@@ -1,7 +1,5 @@
 package Ch08_CollectionAPIEnhancement;
 
-import org.w3c.dom.ls.LSOutput;
-
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
