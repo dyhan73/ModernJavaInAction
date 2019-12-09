@@ -6,6 +6,8 @@ import Ch06_CollectingDataWithStreams.S3_Grouping.CaloricLevel;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class S1_RefactoringBasic {
@@ -16,10 +18,13 @@ public class S1_RefactoringBasic {
     static void doSomething(Task a) {a.execute();}
 
     public static void main(String[] args) {
+        // improve readability
         s912_AnonymousToLambda();
         s913_UsingMethodReference();
         s914_imperativeProcessToStream();
 
+        // improve flexibility
+        s915_improveFlexibility();
     }
 
     private static void s912_AnonymousToLambda() {
@@ -115,5 +120,21 @@ public class S1_RefactoringBasic {
                 .map(Dish::getName)
                 .collect(Collectors.toList());
         System.out.println(dishNames);
+    }
+
+    private static void s915_improveFlexibility() {
+        // conditional deferred execution
+        // problem 1 : expose logger status, check status every logging time is too verbose
+        Logger logger = Logger.getLogger("Simple");
+        if (logger.isLoggable(Level.FINER)) {
+            logger.finer("Problem: " + "aaaaa");
+        }
+
+        // better way
+        // Problem : message is always calculated (it takes computing power when using diagnostic calculation)
+        logger.log(Level.FINER, "Problem" + "bbbb");
+
+        // best way (it only calculate message when condition is checked)
+        logger.log(Level.FINER, () -> "Problem: " + "cccc");
     }
 }
