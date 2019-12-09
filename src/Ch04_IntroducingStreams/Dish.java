@@ -1,5 +1,7 @@
 package Ch04_IntroducingStreams;
 
+import Ch06_CollectingDataWithStreams.S3_Grouping;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -32,6 +34,13 @@ public class Dish {
 
     public Type getType() {
         return type;
+    }
+
+    // this method is using at Chapter 9 (refactoring lambda to method reference)
+    public S3_Grouping.CaloricLevel getCaloricLevel() {
+        if (this.getCalories() <= 400) return S3_Grouping.CaloricLevel.DIET;
+        else if (this.getCalories() <= 700) return S3_Grouping.CaloricLevel.NORMAL;
+        else return S3_Grouping.CaloricLevel.FAT;
     }
 
     @Override
