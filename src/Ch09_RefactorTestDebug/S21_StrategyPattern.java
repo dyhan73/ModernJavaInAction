@@ -42,6 +42,8 @@ public class S21_StrategyPattern {
         System.out.println(b2);
 
         // lambda way
+        // interface (Validator) is needed but implement class is not needed
+        // it is flexible but sometimes concreted class with fine NAME is better I think
         Validator numericValidatorLambda = new Validator(s -> s.matches("[a-z]+"));
         boolean b3 = numericValidatorLambda.validate("aaaaa");
         System.out.println(b3);
