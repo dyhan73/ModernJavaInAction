@@ -1,7 +1,7 @@
 package Ch09_RefactorTestDebug;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 /** Template Method Pattern
  *  is needed when you offer concept of algorithm with possibility of modification the algorithm
@@ -53,10 +53,27 @@ public class S22_TemplateMethodPattern {
         }
     }
 
+    static class OnlineBankingLambda {
+        public void processCustomer(int id, Consumer<Customer> makeCustomerHappy) {
+            Customer c = Database.getCustomerWithId(id);
+            makeCustomerHappy.accept(c);
+        }
+
+        void greetingCustomer(int id, Consumer<Customer> greetingCustomer) {
+            Customer c = Database.getCustomerWithId(id);
+            greetingCustomer.accept(c);
+        }
+    }
+
     public static void main(String[] args) {
         // traditional way with extend sub class (MyBanking)
         OnlineBanking banking = new MyBanking();
         banking.processCustomer(1);
+
+        // Lambda way
+        OnlineBankingLambda bank = new OnlineBankingLambda();
+        bank.processCustomer(2, (Customer c) -> System.out.println(c + " is happy with Lambda"));
+        bank.greetingCustomer(1, c -> System.out.println("Hello " + c.name));
 
     }
 }
