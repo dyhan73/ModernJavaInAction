@@ -1,5 +1,7 @@
 package Ch11_Optional;
 
+import java.util.Arrays;
+
 public class S10_NullExample {
 
     static class Person {
@@ -45,11 +47,32 @@ public class S10_NullExample {
         return person.getCar().getInsurance().getName();
     }
 
-    public static void main(String[] args) {
-        Person person = new Person(new Car(new Insurance("kaka")));
-        System.out.println(getCarInsuranceName(person));
+    static String getCarInsuranceNameWithNullCheck(Person person) {
+        if (person != null) {
+            Car car = person.getCar();
+            if (car != null) {
+                Insurance insurance = car.getInsurance();
+                if (insurance != null) {
+                    return insurance.getName();
+                }
+            }
+        }
+        return "Unknown";
+    }
 
-        person = new Person();
-        System.out.println(getCarInsuranceName(person));  // null point exception
+    public static void main(String[] args) {
+        Person person1 = new Person(new Car(new Insurance("kaka")));
+        System.out.println(getCarInsuranceName(person1));
+
+        Person person2 = new Person();
+        try {
+            System.out.println(getCarInsuranceName(person2));  // null point exception
+        } catch (Exception e) {
+            System.out.println(Arrays.toString(e.getStackTrace()));
+        }
+
+        // using null check version
+        System.out.println(getCarInsuranceNameWithNullCheck(person1));
+        System.out.println(getCarInsuranceNameWithNullCheck(person2));
     }
 }
