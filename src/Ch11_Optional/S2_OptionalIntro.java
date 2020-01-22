@@ -6,6 +6,10 @@ public class S2_OptionalIntro {
     static class Person {
         private Optional<Car> car;
 
+        public Person(Car car) {
+            this.car = Optional.of(car);
+        }
+
         public Optional<Car> getCar() {
             return car;
         }
@@ -14,6 +18,10 @@ public class S2_OptionalIntro {
     static class Car {
         private Optional<Insurance> insurance;
 
+        public Car(Insurance insurance) {
+            this.insurance = Optional.of(insurance);
+        }
+
         public Optional<Insurance> getInsurance() {
             return insurance;
         }
@@ -21,6 +29,10 @@ public class S2_OptionalIntro {
 
     static class Insurance {
         private String name;
+
+        public Insurance(String name) {
+            this.name = name;
+        }
 
         public String getName() {
             return name;
