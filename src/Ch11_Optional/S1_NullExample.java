@@ -2,7 +2,7 @@ package Ch11_Optional;
 
 import java.util.Arrays;
 
-public class S10_NullExample {
+public class S1_NullExample {
 
     static class Person {
         private Car car;
@@ -65,6 +65,7 @@ public class S10_NullExample {
         System.out.println(getCarInsuranceName(person1));
 
         Person person2 = new Person();
+
         try {
             System.out.println(getCarInsuranceName(person2));  // null point exception
         } catch (Exception e) {
