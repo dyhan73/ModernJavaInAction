@@ -13,6 +13,9 @@ public class S2_OptionalIntro {
         public Optional<Car> getCar() {
             return car;
         }
+//        public Car getCar() {
+//            return car.get();
+//        }
 
         @Override
         public String toString() {
@@ -26,12 +29,15 @@ public class S2_OptionalIntro {
         private Optional<Insurance> insurance;
 
         public Car(Insurance insurance) {
-            this.insurance = Optional.of(insurance);
+            this.insurance = Optional.ofNullable(insurance);
         }
 
         public Optional<Insurance> getInsurance() {
             return insurance;
         }
+//        public Insurance getInsurance() {
+//            return insurance.get();
+//        }
 
         @Override
         public String toString() {
@@ -42,13 +48,13 @@ public class S2_OptionalIntro {
     }
 
     static class Insurance {
-        private String name;
+        private Optional<String> name;
 
         public Insurance(String name) {
-            this.name = name;
+            this.name = Optional.of(name);
         }
 
-        public String getName() {
+        public Optional<String> getName() {
             return name;
         }
 
