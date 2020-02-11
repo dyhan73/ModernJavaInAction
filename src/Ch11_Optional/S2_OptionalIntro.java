@@ -13,6 +13,13 @@ public class S2_OptionalIntro {
         public Optional<Car> getCar() {
             return car;
         }
+
+        @Override
+        public String toString() {
+            return "Person{" +
+                    "car=" + car +
+                    '}';
+        }
     }
 
     static class Car {
@@ -25,6 +32,13 @@ public class S2_OptionalIntro {
         public Optional<Insurance> getInsurance() {
             return insurance;
         }
+
+        @Override
+        public String toString() {
+            return "Car{" +
+                    "insurance=" + insurance +
+                    '}';
+        }
     }
 
     static class Insurance {
@@ -36,6 +50,13 @@ public class S2_OptionalIntro {
 
         public String getName() {
             return name;
+        }
+
+        @Override
+        public String toString() {
+            return "Insurance{" +
+                    "name='" + name + '\'' +
+                    '}';
         }
     }
 
