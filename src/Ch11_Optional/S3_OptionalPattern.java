@@ -29,6 +29,13 @@ public class S3_OptionalPattern {
 
     }
 
+    private static String getCarInsuranceName(Optional<S2_OptionalIntro.Person> person) {
+        return person.flatMap(S2_OptionalIntro.Person::getCar)
+                .flatMap(S2_OptionalIntro.Car::getInsurance)
+                .flatMap(S2_OptionalIntro.Insurance::getName)
+                .orElse("Unknown");
+    }
+
     private static void s1131_createOptional() {
         // empty Optional
         Optional<S2_OptionalIntro.Car> optCar = Optional.empty();
@@ -114,5 +121,8 @@ public class S3_OptionalPattern {
                 .flatMap(S2_OptionalIntro.Insurance::getName);
         System.out.println(name2);
         name2.ifPresent(System.out::println);
+
+        // find insurance company name with Optional
+        System.out.println(getCarInsuranceName(Optional.of(person)));
     }
 }
