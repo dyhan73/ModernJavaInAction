@@ -5,6 +5,8 @@ import org.w3c.dom.ls.LSOutput;
 import javax.swing.text.html.Option;
 import java.sql.SQLOutput;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class S3_OptionalPattern {
     public static void main(String[] args) {
@@ -25,6 +27,13 @@ public class S3_OptionalPattern {
         s11321_nullChecking(lPerson);
         s11322_extractUsingMap(insurance);
         s11331_flatMap(person);
+        s1134_optionalStream(person);
+
+        // Optional filter
+        Optional<S2_OptionalIntro.Insurance> optIns = car.getInsurance();
+
+        optIns.filter(ins -> "DongBu".equals(ins.getName().get()))
+                .ifPresent(x -> System.out.println("Ok"));
 
 
     }
@@ -124,5 +133,16 @@ public class S3_OptionalPattern {
 
         // find insurance company name with Optional
         System.out.println(getCarInsuranceName(Optional.of(person)));
+    }
+
+    private static void s1134_optionalStream(S2_OptionalIntro.Person person) {
+        // Optional stream handling (java9)
+        Set<String> stringSet = Optional.of(person).stream()
+                .map(S2_OptionalIntro.Person::getCar)
+                .map(optCar -> optCar.flatMap(S2_OptionalIntro.Car::getInsurance))
+                .map(optIns -> optIns.flatMap(S2_OptionalIntro.Insurance::getName))
+                .flatMap(Optional::stream)
+                .collect(Collectors.toSet());
+        System.out.println(stringSet);
     }
 }
