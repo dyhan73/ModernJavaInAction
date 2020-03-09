@@ -8,7 +8,30 @@ public class S2_SyncAndAsyncAPIs {
 //        s15201_runThreadExample();
 //        s15202_usingFuture();
 //        s1521_usingFutureTypeApi();
+//        s1522_reactiveTypeAPI();
+//        s1523_avoidSleepingInThread();
 
+    }
+
+    private static void s1523_avoidSleepingInThread() {
+        // avoid blocking (sleep) in thread
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(1);
+
+        work1();
+        scheduledExecutorService.schedule(S2_SyncAndAsyncAPIs::work2, 10, TimeUnit.SECONDS);
+
+        scheduledExecutorService.shutdown();
+    }
+
+    private static void work1() {
+        System.out.println("Hello from Work1!");
+    }
+
+    private static void work2() {
+        System.out.println("Hello from Work2!");
+    }
+
+    private static void s1522_reactiveTypeAPI() {
         // reactive type API
         int x = 11;
         ThreadExample.Result result = new ThreadExample.Result();
