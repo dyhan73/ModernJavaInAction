@@ -18,6 +18,9 @@ public class S2_AsyncAPI {
         }
 
         private double calculatePrice(String product) {
+            if (product == "emptyProduct")
+                throw new RuntimeException("Product not available");
+
             delay(1500);
             return random.nextDouble() * product.charAt(0) + product.charAt(1);
         }
@@ -25,10 +28,18 @@ public class S2_AsyncAPI {
         public Future<Double> getPriceAsync(String product) {
             CompletableFuture<Double> futurePrice = new CompletableFuture<>();
             new Thread( () -> {
-                double price = calculatePrice(product);
-                futurePrice.complete(price);
+                try {
+                    double price = calculatePrice(product);
+                    futurePrice.complete(price);
+                } catch (Exception e) {
+                    futurePrice.completeExceptionally(e);
+                }
             }).start();
             return futurePrice;
+        }
+
+        public Future<Double> getPriceAsync2(String product) {
+            return CompletableFuture.supplyAsync(() -> calculatePrice(product));
         }
     }
 
@@ -42,8 +53,14 @@ public class S2_AsyncAPI {
 
     public static void main(String[] args) {
         Shop shop = new Shop("BestShop");
+
+        procMain(shop, "my favorite product");
+        procMain(shop, "emptyProduct");
+    }
+
+    private static void procMain(Shop shop, String product) {
         long start = System.nanoTime();
-        Future<Double> futurePrice = shop.getPriceAsync("my favorite product");
+        Future<Double> futurePrice = shop.getPriceAsync2(product);
         long invocationTime = ((System.nanoTime() - start) / 1_000_000);
         System.out.println("Invocation returned after " + invocationTime + " msecs");
 
