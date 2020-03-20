@@ -7,6 +7,7 @@ import java.util.concurrent.Future;
 public class S2_AsyncAPI {
     static class Shop {
         String name;
+        Random random = new Random();
 
         public Shop(String name) {
             this.name = name;
@@ -20,9 +21,7 @@ public class S2_AsyncAPI {
             return calculatePrice(product);
         }
 
-        private double calculatePrice(String product) {
-            Random random = new Random();
-
+        protected double calculatePrice(String product) {
             if (product == "emptyProduct")
                 throw new RuntimeException("Product not available");
 
