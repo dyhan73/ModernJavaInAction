@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="HarnessBenchmarkTest" />
+        <module name="S3_RxJava" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="HarnessBenchmarkTest" target="1.8" />
+      <module name="S3_RxJava" target="8" />
     </bytecodeTargetLevel>
   </component>
 </project>

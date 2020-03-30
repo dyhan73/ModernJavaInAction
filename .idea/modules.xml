@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/HarnessBenchmarkTest/HarnessBenchmarkTest.iml" filepath="$PROJECT_DIR$/HarnessBenchmarkTest/HarnessBenchmarkTest.iml" />
       <module fileurl="file://$PROJECT_DIR$/ModernJavaInAction.iml" filepath="$PROJECT_DIR$/ModernJavaInAction.iml" />
+      <module fileurl="file://$PROJECT_DIR$/src/Ch17_ReactiveProgramming/S3_RxJava/S3_RxJava.iml" filepath="$PROJECT_DIR$/src/Ch17_ReactiveProgramming/S3_RxJava/S3_RxJava.iml" />
     </modules>
   </component>
 </project>
