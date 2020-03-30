@@ -1,5 +1,13 @@
 package Ch16_CompletableFuture;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadFactory;
+import java.util.stream.Collectors;
+
 public class S4_NonBlockingPipeline {
     public static class Discount {
         public enum Code {
@@ -77,8 +85,11 @@ public class S4_NonBlockingPipeline {
     }
 
     public static void main(String[] args) {
-        s1640_addCodeOnShop();
-        s1641_addDiscount();
+//        s1640_addCodeOnShop();
+//        s1641_addDiscount();
+//        s1642_discountServiceWithStream();
+        s1643_discountServiceWithCompletableFuture();
+        s1643_discountServiceWithCompletableFutureNoExecutor();
     }
 
     private static void s1640_addCodeOnShop() {
@@ -94,4 +105,105 @@ public class S4_NonBlockingPipeline {
         System.out.println(Quote.parse(priceInfo));
         System.out.println(Discount.applyDiscount(Quote.parse(priceInfo)));
     }
+
+    public static List<String> findPrices(List<ShopS4> shops, String product) {
+        return shops.stream()
+                .map(shop -> shop.getPriceS4(product))
+                .map(Quote::parse)
+                .map(Discount::applyDiscount)
+                .collect(Collectors.toList());
+    }
+
+    private static void s1642_discountServiceWithStream() {
+        long start = System.nanoTime();
+        List<ShopS4> shops = Arrays.asList(
+                new ShopS4("BestPrice"),
+                new ShopS4("LetsSaveBig"),
+                new ShopS4("MyFavoriteShop"),
+                new ShopS4("MyFavoriteShop2"),
+                new ShopS4("MyFavoriteShop3"),
+                new ShopS4("MyFavoriteShop4"),
+                new ShopS4("MyFavoriteShop5"),
+                new ShopS4("BuyItAll"));
+
+        System.out.println(findPrices(shops, "Samsung S20"));
+        long duration = (System.nanoTime() - start) / 1_000_000;
+        System.out.println("Done in " + duration + " msecs");
+    }
+
+    public static List<String> findPricesWithCompletableFuture(List<ShopS4> shops, String product) {
+        Executor executor = Executors.newFixedThreadPool(Math.min(shops.size(), 100),
+                new ThreadFactory() {
+                    @Override
+                    public Thread newThread(Runnable r) {
+                        Thread thread = new Thread(r);
+                        thread.setDaemon(true);
+                        return thread;
+                    }
+                });
+
+        List<CompletableFuture<String>> priceFutures =
+            shops.stream()
+                .map(shop -> CompletableFuture.supplyAsync(
+                        () -> shop.getPriceS4(product), executor))
+                .map(future -> future.thenApply(Quote::parse))
+                .map(future -> future.thenCompose(quote ->
+                        CompletableFuture.supplyAsync(() -> Discount.applyDiscount(quote), executor)))
+                .collect(Collectors.toList());
+
+        return priceFutures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
+    }
+
+    private static void s1643_discountServiceWithCompletableFuture() {
+        long start = System.nanoTime();
+        List<ShopS4> shops = Arrays.asList(
+                new ShopS4("BestPrice"),
+                new ShopS4("LetsSaveBig"),
+                new ShopS4("MyFavoriteShop"),
+                new ShopS4("MyFavoriteShop2"),
+                new ShopS4("MyFavoriteShop3"),
+                new ShopS4("MyFavoriteShop4"),
+                new ShopS4("MyFavoriteShop5"),
+                new ShopS4("BuyItAll"));
+
+        System.out.println(findPricesWithCompletableFuture(shops, "Samsung S20"));
+        long duration = (System.nanoTime() - start) / 1_000_000;
+        System.out.println("Done in " + duration + " msecs");
+    }
+
+    public static List<String> findPricesWithCompletableFutureNoExecutor(List<ShopS4> shops, String product) {
+        List<CompletableFuture<String>> priceFutures =
+                shops.stream()
+                        .map(shop -> CompletableFuture.supplyAsync(
+                                () -> shop.getPriceS4(product)))
+                        .map(future -> future.thenApply(Quote::parse))
+                        .map(future -> future.thenCompose(quote ->
+                                CompletableFuture.supplyAsync(() -> Discount.applyDiscount(quote))))
+                        .collect(Collectors.toList());
+
+        return priceFutures.stream()
+                .map(CompletableFuture::join)
+                .collect(Collectors.toList());
+    }
+
+    private static void s1643_discountServiceWithCompletableFutureNoExecutor() {
+        long start = System.nanoTime();
+        List<ShopS4> shops = Arrays.asList(
+                new ShopS4("BestPrice"),
+                new ShopS4("LetsSaveBig"),
+                new ShopS4("MyFavoriteShop"),
+                new ShopS4("MyFavoriteShop2"),
+                new ShopS4("MyFavoriteShop3"),
+                new ShopS4("MyFavoriteShop4"),
+                new ShopS4("MyFavoriteShop5"),
+                new ShopS4("BuyItAll"));
+
+        System.out.println(findPricesWithCompletableFutureNoExecutor(shops, "Samsung S20"));
+        long duration = (System.nanoTime() - start) / 1_000_000;
+        System.out.println("Done in " + duration + " msecs");
+    }
+
+
 }
