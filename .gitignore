@@ -9,6 +9,7 @@
 /build/
 /target/
 */target/
+target
 
 # Intellij files
 #.idea
